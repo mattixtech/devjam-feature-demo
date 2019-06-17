@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="demo-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="opennms-feature-demo-api" version="${project.version}" description="OpenNMS :: Features :: Demo :: API">
+        <bundle>mvn:org.opennms.features/org.opennms.features.api/${project.version}</bundle>
+    </feature>
+    
+    <feature name="opennms-feature-demo-counter" version="${project.version}" description="OpenNMS :: Features :: Demo :: Counter">
+        <feature version="${project.version}">opennms-feature-demo-api</feature>
+        <bundle>mvn:org.opennms.features/org.opennms.features.counter/${project.version}</bundle>
+    </feature>
+
+    <feature name="opennms-feature-demo-supplier" version="${project.version}" description="OpenNMS :: Features :: Demo :: Supplier">
+        <feature version="${project.version}">opennms-feature-demo-api</feature>
+        <bundle>mvn:org.opennms.features/org.opennms.features.supplier/${project.version}</bundle>
+    </feature>
+
+    <feature name="opennms-feature-demo-command" version="${project.version}" description="OpenNMS :: Features :: Demo :: Command">
+        <feature version="${project.version}">opennms-feature-demo-api</feature>
+        <bundle>mvn:org.opennms.features/org.opennms.features.command/${project.version}</bundle>
+    </feature>
+</features>
