@@ -1,3 +1,8 @@
+Readme
+===
+
+This project is a quick demo and overview of how to develop OSGi/Karaf features/bundles for OpenNMS.
+
 Useful commands used in this demo:
 ===
 
@@ -9,8 +14,8 @@ Useful commands used in this demo:
 * Watch the log: `log:tail`
 * Hot-reload bundles if they change on disk: `bundle:watch *`
 * Update a property:
-~~~~
-config:edit <persistent id>
-config:property-set <propert name> <property value>
-config:update
-~~~~
+    ~~~
+    config:edit <persistent id>
+    config:property-set <propert name> <property value>
+    config:update
+    ~~~
