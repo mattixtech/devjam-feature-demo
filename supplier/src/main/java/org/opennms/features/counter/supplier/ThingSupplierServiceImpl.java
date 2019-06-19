@@ -28,17 +28,21 @@
 
 package org.opennms.features.counter.supplier;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.opennms.features.counter.api.ThingHandler;
 import org.opennms.features.counter.api.ThingSupplierService;
 
 public class ThingSupplierServiceImpl implements ThingSupplierService {
     private ThingHandler thingHandler;
     private boolean keepRunning = true;
+    private final AtomicLong numThings = new AtomicLong(50);
 
     private Thread thingAddingLoop = new Thread(() -> {
         while (keepRunning) {
             try {
                 if (thingHandler != null) {
+                    numThings.incrementAndGet();
                     thingHandler.handleThingAdded();
                 }
                 Thread.sleep(1000);
@@ -64,6 +68,6 @@ public class ThingSupplierServiceImpl implements ThingSupplierService {
 
     @Override
     public long getNumThings() {
-        return 50;
+        return numThings.get();
     }
 }

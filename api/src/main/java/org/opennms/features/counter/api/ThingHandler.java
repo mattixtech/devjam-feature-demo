@@ -30,5 +30,8 @@ package org.opennms.features.counter.api;
 
 @FunctionalInterface
 public interface ThingHandler {
+    /**
+     * Handle a thing being added (the number of things has incremented by 1).
+     */
     void handleThingAdded();
 }
