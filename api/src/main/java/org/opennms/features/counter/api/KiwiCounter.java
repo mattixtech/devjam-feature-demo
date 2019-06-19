@@ -26,34 +26,8 @@
  *     http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.features.counter.command;
+package org.opennms.features.counter.api;
 
-import org.apache.karaf.shell.api.action.Action;
-import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.lifecycle.Reference;
-import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.opennms.features.counter.api.AlarmCounter;
-import org.opennms.features.counter.api.KiwiCounter;
-import org.opennms.features.counter.api.NamedService;
-
-// Executed in Karaf shell via opennms-demo:count
-@Command(scope = "opennms-demo", name = "count", description = "Get the count")
-@Service
-public class CounterCommand implements Action {
-    @Reference
-    private AlarmCounter alarmCounter;
-
-    @Reference
-    private KiwiCounter kiwiCounter;
-
-    @Reference
-    private NamedService namedService;
-
-    @Override
-    public Object execute() {
-        System.out.println("The configured name is: " + namedService.getName());
-        System.out.println("The count for alarms is: " + alarmCounter.getNumAlarms());
-        System.out.println("The count for kiwi is: " + kiwiCounter.getNumKiwi());
-        return null;
-    }
+public interface KiwiCounter {
+    long getNumKiwi();
 }

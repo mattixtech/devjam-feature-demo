@@ -29,6 +29,6 @@
 package org.opennms.features.counter.api;
 
 @FunctionalInterface
-public interface ThingHandler {
-    void handleThingAdded();
+public interface KiwiHandler {
+    void handleNewKiwi();
 }

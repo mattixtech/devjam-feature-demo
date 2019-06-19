@@ -28,7 +28,6 @@
 
 package org.opennms.features.counter.api;
 
-public interface ThingSupplierService {
-    void registerThingHandler(ThingHandler thingHandler);
-    long getNumThings();
+public interface NamedService {
+    String getName();
 }

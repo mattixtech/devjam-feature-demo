@@ -28,10 +28,6 @@
 
 package org.opennms.features.counter.api;
 
-public interface CounterService {
+public interface AlarmCounter {
     long getNumAlarms();
-
-    long getNumThings();
-
-    String getName();
 }
