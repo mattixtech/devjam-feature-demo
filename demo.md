@@ -7,6 +7,20 @@ Demo Steps
     cd /Users/opennms/vmshared/devjam-feature-demo
     mvn install
     ~~~
+1. Show the counter bundle in the Maven repository
+    ~~~
+    cd /Users/opennms/.m2/repository/org/opennms/features/org.opennms.features.counter/1.0.0-SNAPSHOT/
+    mkdir unzip
+    cp *.jar unzip
+    cd unzip
+    unzip *.jar
+    cat META-INF/MANIFEST.MF
+    ~~~
+1. Show the feature repository
+    ~~~
+    cd /Users/opennms/.m2/repository/org/opennms/features/org.opennms.features.demo-features/1.0.0-SNAPSHOT
+    cat org.opennms.features.demo-features-1.0.0-SNAPSHOT.xml
+    ~~~
 1. With OpenNMS running, connect to the Karaf shell
     ~~~
     ssh -p 8101 admin@localhost
