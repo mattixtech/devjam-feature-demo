@@ -9,20 +9,22 @@
         </cm:default-properties>
     </cm:property-placeholder>
 
-    <!-- Find an implementation of the AlarmDao interface to pass to our CounterService. This is provided by the OIA.-->
+    <!-- Find an implementation of the AlarmDao interface to pass to our service. This is provided by the OIA.-->
     <reference id="alarmDao" interface="org.opennms.integration.api.v1.dao.AlarmDao"/>
 
-    <!-- Instantiate a copy of our CounterService and wire in the AlarmDao and configured name -->
-    <bean id="counter" class="org.opennms.features.counter.CounterServiceImpl">
+    <!-- Instantiate our service and wire in the AlarmDao and configured name -->
+    <bean id="counter" class="org.opennms.features.counter.CounterImpl">
         <argument ref="alarmDao"/>
         <argument value="${name}"/>
     </bean>
-    <!-- Advertise the services our CounterService provides via the OSGi registry -->
+    <!-- Advertise the services our implementation provides via the OSGi registry -->
     <service ref="counter" interface="org.opennms.integration.api.v1.alarms.AlarmLifecycleListener"/>
-    <service ref="counter" interface="org.opennms.features.counter.api.CounterService"/>
+    <service ref="counter" interface="org.opennms.features.counter.api.NamedService"/>
+    <service ref="counter" interface="org.opennms.features.counter.api.AlarmCounter"/>
+    <service ref="counter" interface="org.opennms.features.counter.api.KiwiCounter"/>
 
-    <!-- Any time a 'ThingSupplierService' is registered, bind it to our CounterService -->
-    <reference-list interface="org.opennms.features.counter.api.ThingSupplierService" availability="optional">
+    <!-- Any time a 'KiwiSupplier' is registered, bind it to our service -->
+    <reference-list interface="org.opennms.features.counter.api.KiwiSupplier" availability="optional">
         <reference-listener bind-method="bindThingSupplier" unbind-method="unbindThingSupplier" ref="counter"/>
     </reference-list>
 </blueprint>

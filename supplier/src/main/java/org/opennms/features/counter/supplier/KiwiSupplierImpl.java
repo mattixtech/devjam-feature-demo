@@ -30,20 +30,19 @@ package org.opennms.features.counter.supplier;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.opennms.features.counter.api.ThingHandler;
-import org.opennms.features.counter.api.ThingSupplierService;
+import org.opennms.features.counter.api.KiwiHandler;
+import org.opennms.features.counter.api.KiwiSupplier;
 
-public class ThingSupplierServiceImpl implements ThingSupplierService {
-    private ThingHandler thingHandler;
-    private boolean keepRunning = true;
-    private final AtomicLong numThings = new AtomicLong(50);
+public class KiwiSupplierImpl implements KiwiSupplier {
+    private KiwiHandler kiwiHandler;
+    private final AtomicLong numThings = new AtomicLong(0);
 
     private Thread thingAddingLoop = new Thread(() -> {
-        while (keepRunning) {
+        while (true) {
             try {
-                if (thingHandler != null) {
+                if (kiwiHandler != null) {
                     numThings.incrementAndGet();
-                    thingHandler.handleThingAdded();
+                    kiwiHandler.handleNewKiwi();
                 }
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -59,15 +58,15 @@ public class ThingSupplierServiceImpl implements ThingSupplierService {
 
     // When OSGi tells us we've been stopped we must stop our thread
     public void destroy() {
-        keepRunning = false;
+        thingAddingLoop.interrupt();
     }
 
-    public void registerThingHandler(ThingHandler thingHandler) {
-        this.thingHandler = thingHandler;
+    public void registerKiwiHandler(KiwiHandler kiwiHandler) {
+        this.kiwiHandler = kiwiHandler;
     }
 
     @Override
-    public long getNumThings() {
+    public long getNumKiwi() {
         return numThings.get();
     }
 }

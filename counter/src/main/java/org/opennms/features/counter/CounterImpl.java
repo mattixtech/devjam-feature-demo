@@ -32,26 +32,28 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.opennms.features.counter.api.CounterService;
-import org.opennms.features.counter.api.ThingHandler;
-import org.opennms.features.counter.api.ThingSupplierService;
+import org.opennms.features.counter.api.AlarmCounter;
+import org.opennms.features.counter.api.KiwiCounter;
+import org.opennms.features.counter.api.KiwiHandler;
+import org.opennms.features.counter.api.KiwiSupplier;
+import org.opennms.features.counter.api.NamedService;
 import org.opennms.integration.api.v1.alarms.AlarmLifecycleListener;
 import org.opennms.integration.api.v1.dao.AlarmDao;
 import org.opennms.integration.api.v1.model.Alarm;
 
-public class CounterServiceImpl implements AlarmLifecycleListener, CounterService {
+public class CounterImpl implements AlarmLifecycleListener, AlarmCounter, KiwiCounter, NamedService {
     private final AtomicLong numAlarms = new AtomicLong(0);
-    private final AtomicLong numThings = new AtomicLong(0);
+    private final AtomicLong numKiwi = new AtomicLong(0);
     private final String name;
 
     // Obtained via integration API
     private final AlarmDao alarmDao;
     
-    // How to react to our thing handler
-    private final ThingHandler thingHandler = numThings::getAndIncrement;
+    // How to react to our Kiwi handler
+    private final KiwiHandler kiwiHandler = numKiwi::getAndIncrement;
 
     // These constructor parameters will be given to us via the definition in this bundle's blueprint.xml
-    public CounterServiceImpl(AlarmDao alarmDao, String name) {
+    public CounterImpl(AlarmDao alarmDao, String name) {
         this.alarmDao = Objects.requireNonNull(alarmDao);
         this.name = Objects.requireNonNull(name);
         initialize();
@@ -61,37 +63,44 @@ public class CounterServiceImpl implements AlarmLifecycleListener, CounterServic
         numAlarms.set(alarmDao.getAlarmCount());
     }
 
-    // OSGi will wire in any services implementing ThingSupplierService at runtime when they get registered
-    public void bindThingSupplier(ThingSupplierService thingSupplierService) {
-        thingSupplierService.registerThingHandler(thingHandler);
-        numThings.getAndAdd(thingSupplierService.getNumThings());
+    // OSGi will wire in any services implementing KiwiSupplier at runtime when they get registered
+    public void bindThingSupplier(KiwiSupplier kiwiSupplier) {
+        kiwiSupplier.registerKiwiHandler(kiwiHandler);
+        numKiwi.getAndAdd(kiwiSupplier.getNumKiwi());
     }
 
+    @Override
     public void handleNewOrUpdatedAlarm(Alarm alarm) {
         numAlarms.incrementAndGet();
     }
 
+    @Override
     public void handleDeletedAlarm(int i, String s) {
         numAlarms.decrementAndGet();
     }
 
+    @Override
+    public void handleAlarmSnapshot(List<Alarm> list) {
+        numAlarms.set(list.size());
+    }
+
+    @Override
     public long getNumAlarms() {
         return numAlarms.get();
     }
 
-    public long getNumThings() {
-        return numThings.get();
+    @Override
+    public long getNumKiwi() {
+        return numKiwi.get();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
-    public void unbindThingSupplier(ThingSupplierService thingSupplierService) {
+    public void unbindThingSupplier(KiwiSupplier kiwiSupplier) {
         // no-op
     }
 
-    public void handleAlarmSnapshot(List<Alarm> list) {
-        // no-op
-    }
 }

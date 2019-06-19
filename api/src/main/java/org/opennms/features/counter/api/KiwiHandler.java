@@ -28,19 +28,7 @@
 
 package org.opennms.features.counter.api;
 
-public interface CounterService {
-    /**
-     * Get the current number of alarms the service has seen.
-     */
-    long getNumAlarms();
-
-    /**
-     * Get the current number of things the service has seen.
-     */
-    long getNumThings();
-
-    /**
-     * Get the service's configured name.
-     */
-    String getName();
+@FunctionalInterface
+public interface KiwiHandler {
+    void handleNewKiwi();
 }

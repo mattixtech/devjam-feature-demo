@@ -35,5 +35,9 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!-- No external dependencies here -->
+    <!-- If dependencies were present here, any bundles depending on this one would need to import that same dependency
+    at that same version-->
 
 </project>

@@ -28,14 +28,6 @@
 
 package org.opennms.features.counter.api;
 
-public interface ThingSupplierService {
-    /**
-     * Register a thing handler with this service.
-     */
-    void registerThingHandler(ThingHandler thingHandler);
-
-    /**
-     * Get the current number of things.
-     */
-    long getNumThings();
+public interface NamedService {
+    String getName();
 }
