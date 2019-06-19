@@ -94,6 +94,10 @@ Demo Steps
     config:property-set name "Hello World"
     config:update
     ~~~
+1. Show that the service restarted as a result of config change
+   ~~~
+   log:tail
+   ~~~
 1. Show that the name has changed via the command
     ~~~
     opennms-demo:count
@@ -127,4 +131,9 @@ Demo Steps
 1. Show that we are able to see alarms counted in real time
     ~~~
     ~/devjam/trigger_alarms.sh
+    ~~~
+1. Uninstall the counter feature and show the command gets unregistered as a result
+    ~~~
+    feature:uninstall opennms-feature-demo-counter
+    log:tail
     ~~~

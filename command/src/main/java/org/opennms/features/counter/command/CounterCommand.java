@@ -43,7 +43,7 @@ public class CounterCommand implements Action {
 
     @Override
     public Object execute() {
-        System.out.println("The counterService's configured name is: " + counterService.getName());
+        System.out.println("The CounterService's configured name is: " + counterService.getName());
         System.out.println("The count for alarms is: " + counterService.getNumAlarms());
         System.out.println("The count for things is: " + counterService.getNumThings());
         return null;
