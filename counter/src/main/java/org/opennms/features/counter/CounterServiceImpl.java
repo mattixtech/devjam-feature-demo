@@ -50,6 +50,7 @@ public class CounterServiceImpl implements AlarmLifecycleListener, CounterServic
     // How to react to our thing handler
     private final ThingHandler thingHandler = numThings::getAndIncrement;
 
+    // These constructor parameters will be given to us via the definition in this bundle's blueprint.xml
     public CounterServiceImpl(AlarmDao alarmDao, String name) {
         this.alarmDao = Objects.requireNonNull(alarmDao);
         this.name = Objects.requireNonNull(name);
@@ -60,17 +61,10 @@ public class CounterServiceImpl implements AlarmLifecycleListener, CounterServic
         numAlarms.set(alarmDao.getAlarmCount());
     }
 
+    // OSGi will wire in any services implementing ThingSupplierService at runtime when they get registered
     public void bindThingSupplier(ThingSupplierService thingSupplierService) {
         thingSupplierService.registerThingHandler(thingHandler);
         numThings.getAndAdd(thingSupplierService.getNumThings());
-    }
-
-    public void unbindThingSupplier(ThingSupplierService thingSupplierService) {
-        // no-op
-    }
-
-    public void handleAlarmSnapshot(List<Alarm> list) {
-        // no-op
     }
 
     public void handleNewOrUpdatedAlarm(Alarm alarm) {
@@ -91,5 +85,13 @@ public class CounterServiceImpl implements AlarmLifecycleListener, CounterServic
 
     public String getName() {
         return name;
+    }
+
+    public void unbindThingSupplier(ThingSupplierService thingSupplierService) {
+        // no-op
+    }
+
+    public void handleAlarmSnapshot(List<Alarm> list) {
+        // no-op
     }
 }

@@ -48,10 +48,12 @@ public class ThingSupplierServiceImpl implements ThingSupplierService {
         }
     });
 
+    // When OSGi tells us to start we can start our thread
     public void init() {
         thingAddingLoop.start();
     }
 
+    // When OSGi tells us we've been stopped we must stop our thread
     public void destroy() {
         keepRunning = false;
     }

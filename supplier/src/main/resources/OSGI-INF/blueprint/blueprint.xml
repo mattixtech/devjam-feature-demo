@@ -1,9 +1,11 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0" >
 
+    <!-- Instantiate a copy of our ThingSupplierService -->
     <bean id="supplier" class="org.opennms.features.counter.supplier.ThingSupplierServiceImpl" init-method="init"
           destroy-method="destroy"/>
 
+    <!-- Advertise our ThingSupplierService implementation via the OSGi registry -->
     <service ref="supplier" interface="org.opennms.features.counter.api.ThingSupplierService"/>
 
 </blueprint>
