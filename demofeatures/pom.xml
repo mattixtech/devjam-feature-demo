@@ -49,7 +49,6 @@
                                 <artifact>
                                     <file>${project.build.outputDirectory}/features.xml</file>
                                     <type>xml</type>
-                                    <!--<classifier>features</classifier>-->
                                 </artifact>
                             </artifacts>
                         </configuration>

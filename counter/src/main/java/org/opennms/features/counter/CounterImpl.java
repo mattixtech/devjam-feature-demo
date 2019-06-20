@@ -63,12 +63,6 @@ public class CounterImpl implements AlarmLifecycleListener, AlarmCounter, KiwiCo
         numAlarms.set(alarmDao.getAlarmCount());
     }
 
-    // OSGi will wire in any services implementing KiwiSupplier at runtime when they get registered
-    public void bindThingSupplier(KiwiSupplier kiwiSupplier) {
-        kiwiSupplier.registerKiwiHandler(kiwiHandler);
-        numKiwi.getAndAdd(kiwiSupplier.getNumKiwi());
-    }
-
     @Override
     public void handleNewOrUpdatedAlarm(Alarm alarm) {
         numAlarms.incrementAndGet();
@@ -83,7 +77,13 @@ public class CounterImpl implements AlarmLifecycleListener, AlarmCounter, KiwiCo
     public void handleAlarmSnapshot(List<Alarm> list) {
         numAlarms.set(list.size());
     }
-
+    
+    // OSGi will wire in any services implementing KiwiSupplier at runtime when they get registered
+    public void bindThingSupplier(KiwiSupplier kiwiSupplier) {
+        kiwiSupplier.registerKiwiHandler(kiwiHandler);
+        numKiwi.set(kiwiSupplier.getNumKiwi());
+    }
+    
     @Override
     public long getNumAlarms() {
         return numAlarms.get();
@@ -102,5 +102,4 @@ public class CounterImpl implements AlarmLifecycleListener, AlarmCounter, KiwiCo
     public void unbindThingSupplier(KiwiSupplier kiwiSupplier) {
         // no-op
     }
-
 }

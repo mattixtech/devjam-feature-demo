@@ -37,7 +37,7 @@ import org.opennms.features.counter.api.KiwiCounter;
 import org.opennms.features.counter.api.NamedService;
 
 // Executed in Karaf shell via opennms-demo:count
-@Command(scope = "opennms-demo", name = "count", description = "Get the count")
+@Command(scope = "opennms-demo", name = "count", description = "Get the count of alarms and kiwis on this system.")
 @Service
 public class CounterCommand implements Action {
     @Reference
