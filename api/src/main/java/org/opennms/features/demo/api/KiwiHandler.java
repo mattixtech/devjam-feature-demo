@@ -26,7 +26,7 @@
  *     http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.features.counter.api;
+package org.opennms.features.demo.api;
 
 @FunctionalInterface
 public interface KiwiHandler {

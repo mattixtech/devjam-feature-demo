@@ -2,7 +2,7 @@
            xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0">
 
     <!-- Create a persistent configuration to control the name of our CounterService -->
-    <cm:property-placeholder id="counterSettings" persistent-id="org.opennms.features.counter.settings"
+    <cm:property-placeholder id="counterSettings" persistent-id="org.opennms.features.demo.counter.settings"
                              update-strategy="reload">
         <cm:default-properties>
             <cm:property name="name" value="demo"/>
@@ -13,18 +13,18 @@
     <reference id="alarmDao" interface="org.opennms.integration.api.v1.dao.AlarmDao"/>
 
     <!-- Instantiate our service and wire in the AlarmDao and configured name -->
-    <bean id="counter" class="org.opennms.features.counter.CounterImpl">
+    <bean id="counter" class="org.opennms.features.demo.counter.CounterImpl">
         <argument ref="alarmDao"/>
         <argument value="${name}"/>
     </bean>
     <!-- Advertise the services our implementation provides via the OSGi registry -->
     <service ref="counter" interface="org.opennms.integration.api.v1.alarms.AlarmLifecycleListener"/>
-    <service ref="counter" interface="org.opennms.features.counter.api.NamedService"/>
-    <service ref="counter" interface="org.opennms.features.counter.api.AlarmCounter"/>
-    <service ref="counter" interface="org.opennms.features.counter.api.KiwiCounter"/>
+    <service ref="counter" interface="org.opennms.features.demo.api.NamedService"/>
+    <service ref="counter" interface="org.opennms.features.demo.api.AlarmCounter"/>
+    <service ref="counter" interface="org.opennms.features.demo.api.KiwiCounter"/>
 
     <!-- Any time a 'KiwiSupplier' is registered, bind it to our service -->
-    <reference-list interface="org.opennms.features.counter.api.KiwiSupplier" availability="optional">
+    <reference-list interface="org.opennms.features.demo.api.KiwiSupplier" availability="optional">
         <reference-listener bind-method="bindThingSupplier" unbind-method="unbindThingSupplier" ref="counter"/>
     </reference-list>
 </blueprint>

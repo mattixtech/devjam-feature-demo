@@ -26,17 +26,17 @@
  *     http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.features.counter;
+package org.opennms.features.demo.counter;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.opennms.features.counter.api.AlarmCounter;
-import org.opennms.features.counter.api.KiwiCounter;
-import org.opennms.features.counter.api.KiwiHandler;
-import org.opennms.features.counter.api.KiwiSupplier;
-import org.opennms.features.counter.api.NamedService;
+import org.opennms.features.demo.api.AlarmCounter;
+import org.opennms.features.demo.api.KiwiCounter;
+import org.opennms.features.demo.api.KiwiHandler;
+import org.opennms.features.demo.api.KiwiSupplier;
+import org.opennms.features.demo.api.NamedService;
 import org.opennms.integration.api.v1.alarms.AlarmLifecycleListener;
 import org.opennms.integration.api.v1.dao.AlarmDao;
 import org.opennms.integration.api.v1.model.Alarm;

@@ -26,47 +26,34 @@
  *     http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.features.counter.supplier;
+package org.opennms.features.demo.command;
 
-import java.util.concurrent.atomic.AtomicLong;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.opennms.features.demo.api.AlarmCounter;
+import org.opennms.features.demo.api.KiwiCounter;
+import org.opennms.features.demo.api.NamedService;
 
-import org.opennms.features.counter.api.KiwiHandler;
-import org.opennms.features.counter.api.KiwiSupplier;
+// Executed in Karaf shell via opennms-demo:count
+@Command(scope = "opennms-demo", name = "count", description = "Get the count of alarms and kiwis on this system.")
+@Service
+public class CounterCommand implements Action {
+    @Reference
+    private AlarmCounter alarmCounter;
 
-public class KiwiSupplierImpl implements KiwiSupplier {
-    private KiwiHandler kiwiHandler;
-    private final AtomicLong numThings = new AtomicLong(0);
+    @Reference
+    private KiwiCounter kiwiCounter;
 
-    private Thread thingAddingLoop = new Thread(() -> {
-        while (true) {
-            try {
-                if (kiwiHandler != null) {
-                    numThings.incrementAndGet();
-                    kiwiHandler.handleNewKiwi();
-                }
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                break;
-            }
-        }
-    });
-
-    // When OSGi tells us to start we can start our thread
-    public void init() {
-        thingAddingLoop.start();
-    }
-
-    // When OSGi tells us we've been stopped we must stop our thread
-    public void destroy() {
-        thingAddingLoop.interrupt();
-    }
-
-    public void registerKiwiHandler(KiwiHandler kiwiHandler) {
-        this.kiwiHandler = kiwiHandler;
-    }
+    @Reference
+    private NamedService namedService;
 
     @Override
-    public long getNumKiwi() {
-        return numThings.get();
+    public Object execute() {
+        System.out.println("The configured name is: " + namedService.getName());
+        System.out.println("The count for alarms is: " + alarmCounter.getNumAlarms());
+        System.out.println("The count for kiwi is: " + kiwiCounter.getNumKiwi());
+        return null;
     }
 }

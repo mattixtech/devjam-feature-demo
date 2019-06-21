@@ -26,8 +26,8 @@
  *     http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.features.counter.api;
+package org.opennms.features.demo.api;
 
-public interface AlarmCounter {
-    long getNumAlarms();
+public interface KiwiCounter {
+    long getNumKiwi();
 }

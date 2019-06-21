@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features name="demo-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
-    <feature name="opennms-feature-demo-api" version="${project.version}" description="OpenNMS :: Features :: Demo :: API">
-        <bundle>mvn:org.opennms.features/org.opennms.features.api/${project.version}</bundle>
+    <feature name="opennms-feature-demo-api" version="${project.version}" install="auto"
+             description="OpenNMS :: Features :: Demo :: API">
+        <bundle>mvn:org.opennms.features.demo/org.opennms.features.demo.api/${project.version}</bundle>
     </feature>
-    
-    <feature name="opennms-feature-demo-counter" version="${project.version}" description="OpenNMS :: Features :: Demo :: Counter Service">
+
+    <feature name="opennms-feature-demo-counter" version="${project.version}" install="auto"
+             description="OpenNMS :: Features :: Demo :: Counter Service">
         <feature version="${project.version}">opennms-feature-demo-api</feature>
         <!-- We also depend on the integration API but that is already made available by default in the OpenNMS
         container so we don't need to add it here -->
-        <bundle>mvn:org.opennms.features/org.opennms.features.counter/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.demo/org.opennms.features.demo.counter/${project.version}</bundle>
     </feature>
 
-    <feature name="opennms-feature-demo-supplier" version="${project.version}" description="OpenNMS :: Features :: Demo :: Kiwi Supplier">
+    <feature name="opennms-feature-demo-supplier" version="${project.version}" install="auto"
+             description="OpenNMS :: Features :: Demo :: Kiwi Supplier">
         <feature version="${project.version}">opennms-feature-demo-api</feature>
-        <bundle>mvn:org.opennms.features/org.opennms.features.supplier/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.demo/org.opennms.features.demo.supplier/${project.version}</bundle>
     </feature>
 
-    <feature name="opennms-feature-demo-command" version="${project.version}" description="OpenNMS :: Features :: Demo :: Count Command">
+    <feature name="opennms-feature-demo-command" version="${project.version}" install="auto"
+             description="OpenNMS :: Features :: Demo :: Count Command">
         <feature version="${project.version}">opennms-feature-demo-api</feature>
-        <bundle>mvn:org.opennms.features/org.opennms.features.command/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.demo/org.opennms.features.demo.command/${project.version}</bundle>
     </feature>
 </features>

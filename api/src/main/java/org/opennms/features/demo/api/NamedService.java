@@ -26,10 +26,8 @@
  *     http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.features.counter.api;
+package org.opennms.features.demo.api;
 
-public interface KiwiSupplier {
-    void registerKiwiHandler(KiwiHandler kiwiHandler);
-    
-    long getNumKiwi();
+public interface NamedService {
+    String getName();
 }

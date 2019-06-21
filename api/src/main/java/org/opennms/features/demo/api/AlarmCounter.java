@@ -26,8 +26,8 @@
  *     http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.features.counter.api;
+package org.opennms.features.demo.api;
 
-public interface NamedService {
-    String getName();
+public interface AlarmCounter {
+    long getNumAlarms();
 }
