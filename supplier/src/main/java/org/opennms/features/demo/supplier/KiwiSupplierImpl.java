@@ -36,14 +36,18 @@ import org.opennms.features.demo.api.KiwiSupplier;
 public class KiwiSupplierImpl implements KiwiSupplier {
     private KiwiHandler kiwiHandler;
     private final AtomicLong numKiwi = new AtomicLong(0);
+    private final int kiwiPerSecond = 1;
 
     private Thread thingAddingLoop = new Thread(() -> {
         while (true) {
             try {
-                numKiwi.incrementAndGet();
-                if (kiwiHandler != null) {
-                    kiwiHandler.handleNewKiwi();
+                for (int i = 0; i < kiwiPerSecond; i++) {
+                    numKiwi.incrementAndGet();
+                    if (kiwiHandler != null) {
+                        kiwiHandler.handleNewKiwi();
+                    }
                 }
+                
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 break;
