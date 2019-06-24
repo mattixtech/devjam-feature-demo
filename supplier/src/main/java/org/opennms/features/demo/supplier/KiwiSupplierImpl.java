@@ -35,13 +35,13 @@ import org.opennms.features.demo.api.KiwiSupplier;
 
 public class KiwiSupplierImpl implements KiwiSupplier {
     private KiwiHandler kiwiHandler;
-    private final AtomicLong numThings = new AtomicLong(0);
+    private final AtomicLong numKiwi = new AtomicLong(0);
 
     private Thread thingAddingLoop = new Thread(() -> {
         while (true) {
             try {
+                numKiwi.incrementAndGet();
                 if (kiwiHandler != null) {
-                    numThings.incrementAndGet();
                     kiwiHandler.handleNewKiwi();
                 }
                 Thread.sleep(1000);
@@ -67,6 +67,6 @@ public class KiwiSupplierImpl implements KiwiSupplier {
 
     @Override
     public long getNumKiwi() {
-        return numThings.get();
+        return numKiwi.get();
     }
 }
